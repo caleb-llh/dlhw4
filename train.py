@@ -117,50 +117,55 @@ def main():
     test_losses = {'A':0,'B':0,'C':0}
     test_accs = {'A':0,'B':0,'C':0}
     
-    ''' training and validation iterations'''
-    for mode in ['A','B','C']:
-        model = models[mode]
-        ''' setup optimizer '''
-        optimizer = torch.optim.SGD(model.parameters(), lr=args.lr)
-        if torch.cuda.is_available():
-            model.cuda()
+    # ''' training and validation iterations'''
+    # for mode in ['A','B','C']:
+    #     model = models[mode]
+    #     ''' setup optimizer '''
+    #     optimizer = torch.optim.SGD(model.parameters(), lr=args.lr)
+    #     if torch.cuda.is_available():
+    #         model.cuda()
         
-        for epoch in range(args.epoch):
-            ''' train model and get averaged epoch loss '''
-            train_loss = train(mode,epoch, model, train_loader, criterion, optimizer)       
-            ''' evaluate the model '''
-            val_loss, val_acc = test(epoch, model, val_loader, criterion)  
-            train_losses[mode].append(train_loss)
-            val_losses[mode].append(val_loss)
-            val_accs[mode].append(val_acc)
-            print('\nMode: {} Epoch: [{}] TRAIN_LOSS: {} VAL_LOSS: {} VAL_ACC:{}'.format(mode, epoch, train_loss, val_loss, val_acc))
+    #     for epoch in range(args.epoch):
+    #         ''' train model and get averaged epoch loss '''
+    #         train_loss = train(mode,epoch, model, train_loader, criterion, optimizer)       
+    #         ''' evaluate the model '''
+    #         val_loss, val_acc = test(epoch, model, val_loader, criterion)  
+    #         train_losses[mode].append(train_loss)
+    #         val_losses[mode].append(val_loss)
+    #         val_accs[mode].append(val_acc)
+    #         print('\nMode: {} Epoch: [{}] TRAIN_LOSS: {} VAL_LOSS: {} VAL_ACC:{}'.format(mode, epoch, train_loss, val_loss, val_acc))
             
-            ''' save best model '''
-            if val_acc > best_acc[mode]:
-                save_model(model, os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)))
-                best_acc[mode] = val_acc
-                best_epoch[mode] = epoch
-        print("Mode: {} Best acc: {}, epoch {}".format(mode, best_acc[mode], best_epoch[mode]))   
+    #         ''' save best model '''
+    #         if val_acc > best_acc[mode]:
+    #             save_model(model, os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)))
+    #             best_acc[mode] = val_acc
+    #             best_epoch[mode] = epoch
+    #     print("Mode: {} Best acc: {}, epoch {}".format(mode, best_acc[mode], best_epoch[mode]))   
 
-    ''' testing '''
+    ''' testing (best model) '''
     for mode in ['A','B','C']:
         model = models[mode]
+        if torch.cuda.is_available():
+            model.load_state_dict(torch.load(os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode))))
+        else:
+            model.load_state_dict(torch.load(os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)),map_location=torch.device('cpu')))
+
         test_loss, test_acc = test(0, model, test_loader, criterion)
         test_losses[mode] = test_loss
         test_accs[mode] = test_acc
         print('Mode: {} TEST_LOSS:{} TEST_ACC:{}'.format(mode, test_loss, test_acc))
 
-    ''' save train/val/test information as pickle files'''
-    with open(os.path.join(args.save_dir,'train_losses.pkl'), 'wb') as f:
-        pickle.dump(train_losses, f)
-    with open(os.path.join(args.save_dir,'val_losses.pkl'), 'wb') as f:
-        pickle.dump(val_losses, f)
-    with open(os.path.join(args.save_dir,'val_accs.pkl'), 'wb') as f:
-        pickle.dump(val_accs, f)
-    with open(os.path.join(args.save_dir,'test_losses.pkl'), 'wb') as f:
-        pickle.dump(test_losses, f)
-    with open(os.path.join(args.save_dir,'test_accs.pkl'), 'wb') as f:
-        pickle.dump(test_accs, f)
+    # ''' save train/val/test information as pickle files'''
+    # with open(os.path.join(args.save_dir,'train_losses.pkl'), 'wb') as f:
+    #     pickle.dump(train_losses, f)
+    # with open(os.path.join(args.save_dir,'val_losses.pkl'), 'wb') as f:
+    #     pickle.dump(val_losses, f)
+    # with open(os.path.join(args.save_dir,'val_accs.pkl'), 'wb') as f:
+    #     pickle.dump(val_accs, f)
+    # with open(os.path.join(args.save_dir,'test_losses.pkl'), 'wb') as f:
+    #     pickle.dump(test_losses, f)
+    # with open(os.path.join(args.save_dir,'test_accs.pkl'), 'wb') as f:
+    #     pickle.dump(test_accs, f)
 
 def plot():
     with open(os.path.join(args.save_dir,'train_losses.pkl'), 'rb') as f:
@@ -204,4 +209,4 @@ if __name__=='__main__':
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
     main()
-    plot()
+    # plot()
