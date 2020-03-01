@@ -9,13 +9,18 @@ class Net(nn.Module):
         if mode =='A':
             self.resnet18 = models.resnet18() # A
         else:
-            self.resnet18 = models.resnet18(pretrained=True) # B
-            if mode =='C':
-                for params in list(self.resnet18.children())[:-2]: # C
-                    params.requires_grad = False
-        # self.linear = nn.Linear(in_features=1000, out_features=102)
-
+            self.resnet18 = models.resnet18(pretrained=True) # B & C
+        self.resnet18.fc = torch.nn.Linear(512, 102)
+        if mode =='C':
+            for params in list(self.resnet18.children())[:-2]: # C
+                params.requires_grad = False
+    
 
     def forward(self, img):
         return self.resnet18(img)
-        # return self.linear(self.resnet18(img))
+
+if __name__ == "__main__":
+    B = Net('B')
+    C = nn.Sequential(*list(models.resnet18().children())[:-2])
+    print(B)
+    # print(C)
