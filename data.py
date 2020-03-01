@@ -42,6 +42,8 @@ class DATA(Dataset):
 
         elif self.mode == 'val' or self.mode == 'test':
             self.transform = transforms.Compose([
+                               transforms.Resize(224),
+                               transforms.CenterCrop(224),
                                transforms.ToTensor(), # (H,W,C)->(C,H,W), [0,255]->[0, 1.0] RGB->RGB
                                transforms.Normalize(MEAN, STD)
                                ])
@@ -50,7 +52,7 @@ class DATA(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-
+        
         ''' get data '''
         img_path, cls = self.data[idx]
         img_path = os.path.join(self.img_dir, img_path)
@@ -58,5 +60,5 @@ class DATA(Dataset):
         # https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/ch01.html
         ''' read image '''
         img = Image.open(img_path).convert('RGB')
-
+        
         return self.transform(img), cls
