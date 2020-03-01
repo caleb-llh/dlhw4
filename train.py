@@ -52,6 +52,7 @@ def test(epoch, model, test_loader, criterion):
     preds = []
     gts = []
     with torch.no_grad(): # do not need to caculate information for gradient during eval
+        print(len(test_loader))
         for idx, (imgs, gt) in enumerate(test_loader):
             
             if torch.cuda.is_available():
