@@ -25,6 +25,7 @@ def arg_parse():
                     help="initial learning rate")
 
     # others
+    parser.add_argument('--machine', type=str, default='cpu')
     parser.add_argument('--save_dir', type=str, default='output')
     parser.add_argument('--random_seed', type=int, default=999)
 

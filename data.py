@@ -19,6 +19,8 @@ class DATA(Dataset):
         self.mode = mode
         self.data_dir = args.data_dir
         self.img_dir = os.path.join(self.data_dir, '102flowers', 'flowers_data', 'jpg')
+        if args.machine == 'colab':
+            self.img_dir = os.path.join(self.data_dir, 'flowers_data', 'jpg')
 
         ''' read the data list '''
         txt_path = os.path.join(self.data_dir, mode + 'file.txt')
