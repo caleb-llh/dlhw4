@@ -138,7 +138,7 @@ def main():
             ''' save best model '''
             if val_acc > best_acc[mode]:
                 save_model(model, os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)))
-                best_acc[mode] = acc
+                best_acc[mode] = val_acc
                 best_epoch[mode] = epoch
         print("Mode: {} Best acc: {}, epoch {}".format(mode, best_acc, best_epoch))   
 
@@ -173,7 +173,9 @@ def plot():
     epochs = list(range(len(train_losses)))
 
     plt.subplot(2, 1, 1)
-    plt.plot(epochs, train_losses, 'o-', label="train")
+    plt.plot(epochs, train_losses['A'], 'o-', label="train")
+    plt.plot(epochs, train_losses['B'], '.-', label="train")
+    plt.plot(epochs, train_losses['C'], '--', label="train")
     plt.ylabel('Training Loss')
     plt.legend()
 
