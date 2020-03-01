@@ -178,6 +178,7 @@ def plot():
 
     epochs = list(range(len(train_losses['A'])))
 
+    fig = plt.figure()
     plt.subplot(3, 1, 1)
     plt.plot(epochs, train_losses['A'], 'o-', label="A", color='red')
     plt.plot(epochs, train_losses['B'], 'o-', label="B", color='blue')
@@ -203,11 +204,36 @@ def plot():
     plt.legend()
     
     plt.savefig(os.path.join(args.save_dir,"train_graphs"), bbox_inches='tight')
+    
+    fig = plt.figure()
+    plt.subplot(3, 1, 1)
+    plt.title('Model A')
+    plt.plot(epochs, train_losses['A'], 'o-', label="train", color='red')
+    plt.plot(epochs, val_losses['A'], 'o-', label="val", color='blue')
+    plt.ylabel('Losses')
+    plt.legend()
+
+    plt.subplot(3, 1, 2)
+    plt.title('Model B')
+    plt.plot(epochs, train_losses['B'], 'o-', label="train", color='red')
+    plt.plot(epochs, val_losses['B'], 'o-', label="val", color='blue')
+    plt.ylabel('Losses')
+    plt.legend()
+
+    plt.subplot(3, 1, 3)
+    plt.title('Model C')
+    plt.plot(epochs, train_losses['C'], 'o-', label="train", color='red')
+    plt.plot(epochs, val_losses['C'], 'o-', label="val", color='blue')
+    plt.ylabel('Losses')
+    plt.xlabel('Epochs')
+    plt.legend()
+
+    plt.savefig(os.path.join(args.save_dir,"loss_graphs"), bbox_inches='tight')
 
 if __name__=='__main__':
     args = parser.arg_parse()
     '''create directory to save trained model and other info'''
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
-    main()
+    # main()
     plot()
