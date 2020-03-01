@@ -196,7 +196,7 @@ def plot():
     plt.ylabel('Validation Losses')
     plt.legend()
     
-    plt.savefig(os.path.join(args.out_dir,"train_graphs"), bbox_inches='tight')
+    plt.savefig(os.path.join(args.save_dir,"train_graphs"), bbox_inches='tight')
 
 if __name__=='__main__':
     args = parser.arg_parse()
