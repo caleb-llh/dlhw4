@@ -151,40 +151,49 @@ def main():
         print('Mode: {} TEST_LOSS:{} TEST_ACC:{}'.format(mode, test_loss, test_acc))
 
     ''' save train/val/test information as pickle files'''
-    with open(os.path.join(args.out_dir,'train_losses.pkl'), 'wb') as f:
+    with open(os.path.join(args.save_dir,'train_losses.pkl'), 'wb') as f:
         pickle.dump(train_losses, f)
-    with open(os.path.join(args.out_dir,'val_losses.pkl'), 'wb') as f:
+    with open(os.path.join(args.save_dir,'val_losses.pkl'), 'wb') as f:
         pickle.dump(val_losses, f)
-    with open(os.path.join(args.out_dir,'val_accs.pkl'), 'wb') as f:
+    with open(os.path.join(args.save_dir,'val_accs.pkl'), 'wb') as f:
         pickle.dump(val_accs, f)
-    with open(os.path.join(args.out_dir,'test_losses.pkl'), 'wb') as f:
+    with open(os.path.join(args.save_dir,'test_losses.pkl'), 'wb') as f:
         pickle.dump(test_losses, f)
-    with open(os.path.join(args.out_dir,'test_accs.pkl'), 'wb') as f:
+    with open(os.path.join(args.save_dir,'test_accs.pkl'), 'wb') as f:
         pickle.dump(test_accs, f)
 
 def plot():
-    with open(os.path.join(args.out_dir,'train_losses.pkl'), 'rb') as f:
+    with open(os.path.join(args.save_dir,'train_losses.pkl'), 'rb') as f:
         train_losses = pickle.load(f)
-    with open(os.path.join(args.out_dir,'val_losses.pkl'), 'rb') as f:
+    with open(os.path.join(args.save_dir,'val_losses.pkl'), 'rb') as f:
         val_losses = pickle.load(f)
-    with open(os.path.join(args.out_dir,'val_accs.pkl'), 'rb') as f:
+    with open(os.path.join(args.save_dir,'val_accs.pkl'), 'rb') as f:
         val_accs = pickle.load(f)
 
     epochs = list(range(len(train_losses)))
 
-    plt.subplot(2, 1, 1)
-    plt.plot(epochs, train_losses['A'], 'o-', label="train")
-    plt.plot(epochs, train_losses['B'], '.-', label="train")
-    plt.plot(epochs, train_losses['C'], '--', label="train")
+    plt.subplot(3, 1, 1)
+    plt.plot(epochs, train_losses['A'], 'o-', label="A", color='red')
+    plt.plot(epochs, train_losses['B'], '.-', label="B", color='blue')
+    plt.plot(epochs, train_losses['C'], '--', label="C", color='green')
     plt.ylabel('Training Loss')
     plt.legend()
 
-    plt.subplot(2, 1, 2)
-    plt.plot(epochs, train_accs, 'o-', label="train")
-    plt.plot(epochs, test_accs, '.-', label="val")
-    plt.title('Comparing train and val accuracies')
+    plt.subplot(3, 1, 2)
+    plt.plot(epochs, val_losses['A'], 'o-', label="A", color='red')
+    plt.plot(epochs, val_losses['B'], '.-', label="B", color='blue')
+    plt.plot(epochs, val_losses['C'], '--', label="C", color='green')
+    # plt.title('Comparing train and val accuracies')
+    # plt.xlabel('Epochs')
+    plt.ylabel('Validation Losses')
+    plt.legend()
+
+    plt.subplot(3,1,3)
+    plt.plot(epochs, val_accs['A'], 'o-', label="A", color='red')
+    plt.plot(epochs, val_accs['B'], '.-', label="B", color='blue')
+    plt.plot(epochs, val_accs['C'], '--', label="C", color='green')
     plt.xlabel('Epochs')
-    plt.ylabel('Accuracies')
+    plt.ylabel('Validation Losses')
     plt.legend()
     
     plt.savefig(os.path.join(args.out_dir,"train_graphs"), bbox_inches='tight')
