@@ -147,6 +147,7 @@ def main():
         model = models[mode]
         if torch.cuda.is_available():
             model.load_state_dict(torch.load(os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode))))
+            model.cuda()
         else:
             model.load_state_dict(torch.load(os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)),map_location=torch.device('cpu')))
 
