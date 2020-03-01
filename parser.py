@@ -13,7 +13,7 @@ def arg_parse():
     # training parameters
     parser.add_argument('--gpu', default=0, type=int, 
                     help='In homework, please always set to 0')
-    parser.add_argument('--epoch', default=10, type=int,
+    parser.add_argument('--epoch', default=15, type=int,
                     help="num of validation iterations")
     parser.add_argument('--train_batch', default=32, type=int,
                     help="train batch size")

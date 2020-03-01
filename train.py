@@ -140,7 +140,7 @@ def main():
                 save_model(model, os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)))
                 best_acc[mode] = val_acc
                 best_epoch[mode] = epoch
-        print("Mode: {} Best acc: {}, epoch {}".format(mode, best_acc, best_epoch[mode]))   
+        print("Mode: {} Best acc: {}, epoch {}".format(mode, best_acc[mode], best_epoch[mode]))   
 
     ''' testing '''
     for mode in ['A','B','C']:
