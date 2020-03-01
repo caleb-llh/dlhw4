@@ -136,7 +136,7 @@ def main():
             print('\nMode: {} Epoch: [{}] TRAIN_LOSS: {} VAL_LOSS: {} VAL_ACC:{}'.format(mode, epoch, train_loss, val_loss, val_acc))
             
             ''' save best model '''
-            if val_acc > best_acc:
+            if val_acc > best_acc[mode]:
                 save_model(model, os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)))
                 best_acc[mode] = acc
                 best_epoch[mode] = epoch
