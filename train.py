@@ -203,5 +203,5 @@ if __name__=='__main__':
     '''create directory to save trained model and other info'''
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
-    # main()
+    main()
     plot()
