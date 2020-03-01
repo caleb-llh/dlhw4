@@ -140,7 +140,7 @@ def main():
                 save_model(model, os.path.join(args.save_dir, 'model_best_{}.pth.tar'.format(mode)))
                 best_acc[mode] = val_acc
                 best_epoch[mode] = epoch
-        print("Mode: {} Best acc: {}, epoch {}".format(mode, best_acc, best_epoch))   
+        print("Mode: {} Best acc: {}, epoch {}".format(mode, best_acc, best_epoch[mode]))   
 
     ''' testing '''
     for mode in ['A','B','C']:
@@ -170,7 +170,7 @@ def plot():
     with open(os.path.join(args.save_dir,'val_accs.pkl'), 'rb') as f:
         val_accs = pickle.load(f)
 
-    epochs = list(range(len(train_losses)))
+    epochs = list(range(len(train_losses['A'])))
 
     plt.subplot(3, 1, 1)
     plt.plot(epochs, train_losses['A'], 'o-', label="A", color='red')

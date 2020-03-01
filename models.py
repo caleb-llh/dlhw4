@@ -9,7 +9,7 @@ class Net(nn.Module):
         if mode =='A':
             self.resnet18 = models.resnet18() # A
         else:
-            self.resnet18 = models.resnet18(pretrained=True) # B & C
+            self.resnet18 = models.resnet18(pretrained=True) # B
             if mode =='C':
                 for params in list(self.resnet18.children())[:-2]: # C
                     params.requires_grad = False
