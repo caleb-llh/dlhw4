@@ -5,7 +5,7 @@ import argparse
 def arg_parse():
     parser = argparse.ArgumentParser(description='Deep Learning HW4')
     # Datasets parameters
-    parser.add_argument('--data_dir', type=str, default='flowers102stuff', 
+    parser.add_argument('--data_dir', type=str, default='../', 
                     help="root path to data directory")
     parser.add_argument('--workers', default=4, type=int,
                     help="number of data loading workers (default: 4)")
