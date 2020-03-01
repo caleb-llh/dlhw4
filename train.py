@@ -174,15 +174,15 @@ def plot():
 
     plt.subplot(3, 1, 1)
     plt.plot(epochs, train_losses['A'], 'o-', label="A", color='red')
-    plt.plot(epochs, train_losses['B'], '.-', label="B", color='blue')
-    plt.plot(epochs, train_losses['C'], '--', label="C", color='green')
+    plt.plot(epochs, train_losses['B'], 'o-', label="B", color='blue')
+    plt.plot(epochs, train_losses['C'], 'o-', label="C", color='green')
     plt.ylabel('Training Loss')
     plt.legend()
 
     plt.subplot(3, 1, 2)
     plt.plot(epochs, val_losses['A'], 'o-', label="A", color='red')
-    plt.plot(epochs, val_losses['B'], '.-', label="B", color='blue')
-    plt.plot(epochs, val_losses['C'], '--', label="C", color='green')
+    plt.plot(epochs, val_losses['B'], 'o-', label="B", color='blue')
+    plt.plot(epochs, val_losses['C'], 'o-', label="C", color='green')
     # plt.title('Comparing train and val accuracies')
     # plt.xlabel('Epochs')
     plt.ylabel('Validation Losses')
@@ -190,10 +190,10 @@ def plot():
 
     plt.subplot(3,1,3)
     plt.plot(epochs, val_accs['A'], 'o-', label="A", color='red')
-    plt.plot(epochs, val_accs['B'], '.-', label="B", color='blue')
-    plt.plot(epochs, val_accs['C'], '--', label="C", color='green')
+    plt.plot(epochs, val_accs['B'], 'o-', label="B", color='blue')
+    plt.plot(epochs, val_accs['C'], 'o-', label="C", color='green')
     plt.xlabel('Epochs')
-    plt.ylabel('Validation Losses')
+    plt.ylabel('Validation Accuracies')
     plt.legend()
     
     plt.savefig(os.path.join(args.save_dir,"train_graphs"), bbox_inches='tight')
